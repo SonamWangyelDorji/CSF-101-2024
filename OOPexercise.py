@@ -14,4 +14,4 @@ b = Dog("dawa", "white", "2 years")
 c = Dog("bruno", "black and white", "2 years")
 
 # Interacting with objects 
-print(c.bark())  # Output: bruno is 2 years old and has black and white fur.
+print(c.bark()) 
