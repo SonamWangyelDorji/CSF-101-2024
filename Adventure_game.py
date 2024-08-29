@@ -13,13 +13,8 @@ class Character:
         print(f"Inventory: {self.inventory}")
 
     def take_damage(self,amount):
-        # Reduces health by the damage amount and if the health reaches zero,
-        # it prints a message indicating the character has died and,
-        # it prevents the health to go into negative. 
+        # Reduces health by the damage amount.
         self.health -= amount
-        if self.health < 0:
-            self.health = 0
-            print("You died")
         
     
     def pick_item(self,item):
