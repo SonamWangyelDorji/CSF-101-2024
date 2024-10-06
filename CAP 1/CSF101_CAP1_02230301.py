@@ -73,7 +73,7 @@ combined = list(zip(names , scores))
 bubble_sorted = bubble_sort(combined)
 # print("\n\n Bubble Sorted list:")
 # print(bubble_sorted)
-#
+# Unzipping the file so that the two list can be used to write the names and score in a file.
 bubble_sorted_names, bubble_sorted_scores = zip(*bubble_sorted)
 
 
@@ -90,6 +90,7 @@ def insertion_sort(comb):
 insertion_sorted = insertion_sort(combined)
 # print("\n\n Insertion Sorted list:")
 # print(insertion_sorted)
+# Unzipping the file so that the two list can be used to write the names and score in a file.
 insertion_sorted_names, insertion_sorted_scores = zip(*insertion_sorted)
 
 
