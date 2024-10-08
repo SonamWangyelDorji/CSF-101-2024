@@ -40,7 +40,7 @@ if scores:
     avg = total_score/len(scores)
 else:
     avg = 0
-print(f"Average Score: {avg}")
+# print(f"Average Score: {avg}")
 
 # Applying bubble sort
 def bubble_sort(comb):
