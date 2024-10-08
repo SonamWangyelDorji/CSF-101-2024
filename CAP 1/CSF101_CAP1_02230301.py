@@ -56,7 +56,7 @@ combined = list(zip(names_with_id,scores))
 bubble_sorted_list = bubble_sort(combined)
 # print(bubble_sorted_list)
 
-#unzipping the file if there is further operations/works to be done
+#unzipping the file to  get the names and scores after bubble sort
 bubble_sorted_names_with_id, bubble_sorted_scores = zip(*bubble_sorted_list)
 
 
@@ -72,7 +72,7 @@ def insertion_sort(comb):
     return comb
 insertion_sorted_list = insertion_sort(combined)
 # print(insertion_sorted_list)
-#unzipping the file if there is further operations/works to be done
+#unzipping the file to  get the names and scores after insertion sort
 insertion_sorted_names_with_id, insertion_sorted_scores = zip(*insertion_sorted_list)
 
 
@@ -148,7 +148,7 @@ def binary_search_iterative(to_search,target):
     # If there is no occurance of the targeted result, return dictionary with empty value
     if index_found == -1:
         return {"Binary Search(iterative)": result}
-    
+    # If the targeted value is present, replace index_found by index (searching if there is more then one targeted value)
     index = index_found
     while index >= 0 and to_search[index][1] == target:
         result.append(to_search[index])
