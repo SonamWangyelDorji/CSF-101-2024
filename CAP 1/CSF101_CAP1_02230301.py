@@ -16,89 +16,68 @@
 
 with open('02230301.txt','r') as file:
     data = file.readlines()
-names = []
+names_with_id = []
 scores = []
 
-#Cleaning the data
-def cleaning_data(x):
-    global names
+def clean_data(x):
+    global names_with_id
     global scores
-    for char in x: 
-        char = char.strip()
+    for line in x:
+        
+        line = line.strip()
 
-        if char == "":
-            continue
-
-        split_data = char.split('_')
-
-        if len(split_data) != 2:
-            continue
-
-        name = split_data[0]
-
-        id_number_and_score = split_data[1].split(',')
-
-        if len(id_number_and_score) != 2:
-            continue
-
-        score = id_number_and_score[1]
-
-        names.append(name)
+        name_with_ID, score = line.split(',')
+        
+        names_with_id.append(name_with_ID)
         scores.append(int(score))
-    return names, scores
+    return names_with_id , scores
+names_with_id, scores = clean_data(data)
+# print(names_with_id)
 
-names, scores = cleaning_data(data)
-
-
-# Finding the average scores of the data
+# Finding average
 if scores:
-    t_scores = sum(scores)
-    avg = t_scores / len(scores)
+    total_score = sum(scores)
+    avg = total_score/len(scores)
 else:
     avg = 0
+print(f"Average Score: {avg}")
 
-# print(f"Average score: {avg}")
-
-#Combining two list into one
-combined = list(zip(names , scores))
-
-#Bubble Sort
+# Applying bubble sort
 def bubble_sort(comb):
     n = len(comb)
     for i in range(n):
         for j in range(0, n-i-1):
+            #Comparing the scores
             if comb[j][1] > comb[j+1][1]:
                 comb[j], comb[j+1] = comb[j+1], comb[j]
     return comb
+# Combining two list
+combined = list(zip(names_with_id,scores))
+bubble_sorted_list = bubble_sort(combined)
+# print(bubble_sorted_list)
+
+#unzipping the file if there is further operations/works to be done
+bubble_sorted_names_with_id, bubble_sorted_scores = zip(*bubble_sorted_list)
 
 
-
-bubble_sorted = bubble_sort(combined)
-# print("\n\n Bubble Sorted list:")
-# print(bubble_sorted)
-# Unzipping the file so that the two list can be used to write the names and score in a file.
-bubble_sorted_names, bubble_sorted_scores = zip(*bubble_sorted)
-
-
-#Inerstion Sort
+# Applying insertion sort
 def insertion_sort(comb):
     for i in range(1, len(comb)):
         element = comb[i]
-        j = i - 1
-        while j >= 0 and comb[j][1] > element[1]:
-            comb[j + 1] = comb[j]
+        j = i-1
+        while j>=0 and comb[j][1] > element[1]:
+            comb[j+1] = comb[j]
             j -= 1
-        comb[j + 1] = element
+        comb[j+1] = element
     return comb
-insertion_sorted = insertion_sort(combined)
-# print("\n\n Insertion Sorted list:")
-# print(insertion_sorted)
-# Unzipping the file so that the two list can be used to write the names and score in a file.
-insertion_sorted_names, insertion_sorted_scores = zip(*insertion_sorted)
+insertion_sorted_list = insertion_sort(combined)
+# print(insertion_sorted_list)
+#unzipping the file if there is further operations/works to be done
+insertion_sorted_names_with_id, insertion_sorted_scores = zip(*insertion_sorted_list)
 
 
 #Lowest Scorer
-lowest_scorer = bubble_sorted[0]
+lowest_scorer = bubble_sorted_list[0]
 lowest_scorer_table = f"""
 {'Lowest Score(s): '}
 {'Lowest Score Table:'}
@@ -106,12 +85,11 @@ lowest_scorer_table = f"""
 {'-'*30} 
  {lowest_scorer[0]:<20} | {lowest_scorer[1]:<5} 
 
-
 """
-
+# print(lowest_scorer_table)
 
 #Highest Scorer
-highest_scorer = bubble_sorted[-1]
+highest_scorer = bubble_sorted_list[-1]
 highest_scorer_table = f"""
 {'Highest Score(s)'}
 {'Highest Score Table:'}
@@ -120,49 +98,44 @@ highest_scorer_table = f"""
  {highest_scorer[0]:<20} | {highest_scorer[1]:<5} 
 
 """
-# print(lowest_scorer_table)
 # print(highest_scorer_table)
 
-
+#Students scoring above average
 above_average = []
-for name, score in zip(bubble_sorted_names,bubble_sorted_scores):
+for name, score in zip(bubble_sorted_names_with_id,bubble_sorted_scores):
     if score > avg:
         above_average.append((name, score))
 # print (above_average)
 
-
+#Students scoring below average
 below_average = []
-for name, score in zip(bubble_sorted_names,bubble_sorted_scores):
+for name, score in zip(bubble_sorted_names_with_id,bubble_sorted_scores):
     if score < avg:
         below_average.append((name, score))
-# print("\n\n")
-# print(below_avg)
+# print (below_average)
 
 
-
-# Creating linear search algorithm 
+#Creating linear search algorithm 
 def linear_search(to_search,target):
     result = []    
     for element in to_search:
         if element[1] == target:
             result.append(element)
-        #Storing the result in a dictionary
         result_dict = {"Linear Search" : result}
     return result_dict
-        
+
 target_score = int(input("Enter the score to search for: "))
-linear_search_results = linear_search(bubble_sorted,target_score)
+linear_search_results = linear_search(bubble_sorted_list,target_score)
 # print(f"Linear searched results: {linear_search_results}")
 
 
-
-#Creating binary search algorithm
+#Creating binary search algorithm 
 def binary_search_iterative(to_search,target):
     result = []
     left = 0
     right = len(to_search) - 1
     index_found = -1
-    #Checking the occurance of first target
+
     while left <= right:
         mid = left + (right - left) // 2
         if to_search[mid][1] == target:
@@ -172,28 +145,26 @@ def binary_search_iterative(to_search,target):
             left = mid + 1
         else:
             right = mid - 1
-
+    # If there is no occurance of the targeted result, return dictionary with empty value
     if index_found == -1:
-        return {"Binary Search (iterative)": []}
-    # If target does exist, index_found will be replace by index
+        return {"Binary Search(iterative)": result}
+    
     index = index_found
-    #Checking the occurance of second target
     while index >= 0 and to_search[index][1] == target:
         result.append(to_search[index])
         index -= 1
     index = index_found + 1
-    #Check the occurance of second target
     while index < len(to_search) and to_search[index][1] == target:
         result.append(to_search[index])
         index += 1
-    # Storing the results in dictionary 
     result_dict = {"Binary Search (iterative)": result}
     return result_dict
 
-binary_search_results = binary_search_iterative(bubble_sorted,target_score)
+binary_search_results = binary_search_iterative(bubble_sorted_list,target_score)
 # print(f"Binary searched results: {binary_search_results}")
 
 
+# Writing output
 
 with open('output.txt', 'w') as output_file:
 
@@ -205,18 +176,16 @@ with open('output.txt', 'w') as output_file:
     output_file.write("\nBubble Sorted List:\n")
     output_file.write(f"{'Name':<20}| {'Score':<5}\n")
     output_file.write('-'*30 + '\n')
-    for name , score in zip(bubble_sorted_names,bubble_sorted_scores):
+    for name , score in zip(bubble_sorted_names_with_id,bubble_sorted_scores):
         output_file.write(f"{name:<20} | {score:<5}\n")
-
 
     #Writing the insertion sorted list
     output_file.write("\nInsertion Sorted List:\n")
     output_file.write(f"{'Name':<20}| {'Score':<5}\n")
     output_file.write('-'*30 + '\n')
-    for name , score in zip(insertion_sorted_names,insertion_sorted_scores):
+    for name , score in zip(insertion_sorted_names_with_id,insertion_sorted_scores):
         output_file.write(f"{name:<20} | {score:<5}\n")
-
-
+    
     #Writing students scoring above average
     output_file.write("\nStudents Scoring Above Average\n")
     output_file.write("Above Average Students\n")
@@ -224,8 +193,7 @@ with open('output.txt', 'w') as output_file:
     output_file.write('-'*30 + '\n')
     for name , score in above_average:
         output_file.write(f"{name:<20} | {score:<5}\n")
-
-
+    
     # Writing students scoring below average
     output_file.write("\nStudents Scoring Below Average\n")
     output_file.write("Below Average Students\n")
@@ -233,7 +201,7 @@ with open('output.txt', 'w') as output_file:
     output_file.write('-'*30 + '\n')
     for name, score in below_average:
         output_file.write(f"{name:<20} | {score:<5}\n")
-    
+
     #Writing results found by implementing linear search algorithm
     output_file.write("\nSearch Results\n")
     for key, value in linear_search_results.items():
@@ -254,17 +222,3 @@ with open('output.txt', 'w') as output_file:
             output_file.write("No result has been found.")    
 print("Output file has been written")
     
-
-
-
-
-
-
-
-
-
-
-
-
-
-
