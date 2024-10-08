@@ -59,6 +59,9 @@ else:
 
 # print(f"Average score: {avg}")
 
+#Combining two list into one
+combined = list(zip(names , scores))
+
 #Bubble Sort
 def bubble_sort(comb):
     n = len(comb)
@@ -68,8 +71,8 @@ def bubble_sort(comb):
                 comb[j], comb[j+1] = comb[j+1], comb[j]
     return comb
 
-#Combining two list into one
-combined = list(zip(names , scores))
+
+
 bubble_sorted = bubble_sort(combined)
 # print("\n\n Bubble Sorted list:")
 # print(bubble_sorted)
