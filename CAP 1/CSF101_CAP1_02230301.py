@@ -146,6 +146,7 @@ def linear_search(to_search,target):
     for element in to_search:
         if element[1] == target:
             result.append(element)
+        #Storing the result in a dictionary
         result_dict = {"Linear Search" : result}
     return result_dict
         
@@ -161,7 +162,7 @@ def binary_search_iterative(to_search,target):
     left = 0
     right = len(to_search) - 1
     index_found = -1
-
+    #Checking the occurance of first target
     while left <= right:
         mid = left + (right - left) // 2
         if to_search[mid][1] == target:
@@ -173,16 +174,19 @@ def binary_search_iterative(to_search,target):
             right = mid - 1
 
     if index_found == -1:
-        return {"Targeted score not found."}
-    
+        return {"Binary Search (iterative)": []}
+    # If target does exist, index_found will be replace by index
     index = index_found
+    #Checking the occurance of second target
     while index >= 0 and to_search[index][1] == target:
         result.append(to_search[index])
         index -= 1
     index = index_found + 1
+    #Check the occurance of second target
     while index < len(to_search) and to_search[index][1] == target:
         result.append(to_search[index])
         index += 1
+    # Storing the results in dictionary 
     result_dict = {"Binary Search (iterative)": result}
     return result_dict
 
