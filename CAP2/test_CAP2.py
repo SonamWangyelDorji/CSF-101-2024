@@ -1,3 +1,10 @@
+# Reference 
+# https://gist.github.com/mogproject/fc7c4e94ba505e95fa03
+# https://kapeli.com/cheat_sheets/Python_unittest_Assertions.docset/Contents/Resources/Documents/index
+# https://docs.python.org/3/library/unittest.html#unittest.TestCase.setUp
+# https://medium.com/@sachinsoni600517/unit-testing-in-python-a-comprehensive-guide-for-beginners-985eec71bb4d
+# https://realpython.com/python-unittest/
+
 import unittest
 
 from CSF101_CAP2_02230301 import Library, Book, Admin, User
