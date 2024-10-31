@@ -56,5 +56,34 @@ class TestingLibrarySystem(unittest.TestCase):
         #Check availability status of new book
         self.assertTrue(add_book_by_admin.availability_status)
 
+    #TEST_CASE: borrowing all books from library
+    def test_borrow_all_books(self):
+        #Add book for testing
+        book1 = Book("Test_Book1","Author1")
+        self.admin.add_books_to_library(self.library_system,book1)
+        #Borrow all book from library
+        self.user.borrow(self.library_system,"Test_Book1")
+        self.user.borrow(self.library_system,"Book")
+
+        #Check available book in library
+        available_book = []
+        for book in self.library_system.books:
+            if book.availability_status == True:
+                available_book.append(book)
+    
+        #Verify all books are borrowed
+        self.assertEqual(len(available_book),0)
+
+        #Check if all the mentioned borrowed books are in users "borrowed_book" list
+        self.assertIn(self.book, self.user.book_borrowed)
+        self.assertIn(book1, self.user.book_borrowed)
+    
+    #TEST_CASE: returning books that were not borrowed
+    def test_return_book_not_borrowed(self):
+        returning_not_borrowed = self.user.return_book(self.library_system, "No books borrowed")
+
+        #Check error message
+        self.assertEqual(returning_not_borrowed, "You don't have 'No books borrowed' borrowed.")
+    
 if __name__ == "__main__":
     unittest.main()
