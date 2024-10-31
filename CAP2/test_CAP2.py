@@ -25,5 +25,12 @@ class TestingLibrarySystem(unittest.TestCase):
         self.assertIn(self.book, self.user.book_borrowed)
 
 
+    #Testing to borrow a book that is alredy borrowed
+    def test_invalid_book_borrowing(self):
+        self.user.borrow(self.library_system, "Book")
+
+        borrowing_same_book = self.user.borrow(self.library_system, "Book")
+        print(borrowing_same_book,"Nothing will be printed")
+        self.assertIsNone(borrowing_same_book)
 if __name__ == "__main__":
     unittest.main()
