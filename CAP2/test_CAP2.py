@@ -40,7 +40,21 @@ class TestingLibrarySystem(unittest.TestCase):
         #Test if the users book_borrowed list is empty
         self.assertEqual(self.user.book_borrowed, [])
     
-    #
+    #Returning a book that hasnt been borrowed
+    def test_invalid_book_returning(self):
+        returning_unborrowed_book = self.user.return_book(self.library_system,"Book")
+        #Verify return attempt fail
+        self.assertEqual(returning_unborrowed_book,"You don't have 'Book' borrowed.")
+
+    #Ensuring Admin can add Book and is appeared in library
+    def test_admin_adding_books(self):
+        add_book_by_admin = Book("Added_Book","Author")
+        self.admin.add_books_to_library(self.library_system, add_book_by_admin)
+
+        #Verify the new book is in Library
+        self.assertIn(add_book_by_admin, self.library_system.books)
+        #Check availability status of new book
+        self.assertTrue(add_book_by_admin.availability_status)
 
 if __name__ == "__main__":
     unittest.main()
