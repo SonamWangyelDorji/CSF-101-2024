@@ -15,7 +15,7 @@ This file provides documentation for the test cases created to validate the func
 
 - Each test case (e.g. test_valid_book_borrowing, test_invalid_book_borrowing ..) is designed to test a specific functionality of the Library Management System.
 
-- Tests includes edge cases (e.g. returning books that were not borrowed, borrowing all books from library)
+- Tests includes edge cases (e.g. returning books that were not borrowed, borrowing all books from library, borrowing non_existent book etc..)
 
 - Each test uses assertion (e.g assertIn, assertEqual, assertFalse) to confirm that actual outcomes match expected outcome.
 

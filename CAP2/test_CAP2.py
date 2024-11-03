@@ -96,9 +96,30 @@ class TestingLibrarySystem(unittest.TestCase):
     #TEST edge/boundry CASE: borrowing a book that does not exist
     def test_borrow_nonexistent_book(self):
         #Borrow a book that does not exist
-        borrow_nonexistent = self.user.borrow(self.library_system, "Book_That_Doesnt_Exist")
+        borrow_nonexistent = self.user.borrow(self.library_system, "Book that doesnt exist")
         #Verify error message
         self.assertIsNone(borrow_nonexistent)
+
+    #TEST edge/boundry CASE: return book that does not exist
+    def test_return_nonexistent_book(self):
+        #return non_existent book
+        return_nonexistent_book = self.user.return_book(self.library_system, "Return Book that doesnt exist")
+        #Verify error message
+        self.assertEqual(return_nonexistent_book, "You don't have 'Return Book that doesnt exist' borrowed.")
+
+
+    #TEST edge/boundry CASE: validate if the book borrowed is kept tracked or not 
+    def test_valid_tracking_of_books_borrowed(self):
+        # Add book for testing 
+        add_book_for_testing = Book("Harry Potter","J.K Rowling")
+        self.admin.add_books_to_library(self.library_system, add_book_for_testing)
+        # User borrows book
+        self.user.borrow(self.library_system, "Harry Potter")
+        #Check if the borrowed book is in users "Borrowed_book list"
+        self.assertIn(add_book_for_testing, self.user.book_borrowed)
+        #Check if the booked borrowed is tracked in the library's log
+        self.assertIn(add_book_for_testing, self.library_system.borrowed_book_log)
+    
     
 if __name__ == "__main__":
     unittest.main()
