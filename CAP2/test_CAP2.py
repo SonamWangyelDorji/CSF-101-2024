@@ -16,10 +16,10 @@ class TestingLibrarySystem(unittest.TestCase):
         self.admin = Admin("ADMIN")
         self.user = User("USER_1")
         self.book = Book("Book","Author")
-        # Add book in library by admin (Adding two books )
+        # Add book in library
         self.admin.add_books_to_library(self.library_system, self.book)
 
-    # Testing is user can successfully borrow a book and availability changes correctly
+    # Testing if user can successfully borrow a book and availability changes correctly
     def test_valid_book_borrowing(self):
         self.user.borrow(self.library_system, "Book")
 
@@ -29,12 +29,12 @@ class TestingLibrarySystem(unittest.TestCase):
         #Check if the borrowed book is in users "Borrowed_book list"
         self.assertIn(self.book, self.user.book_borrowed)
 
-    #Testing to borrow a book that is alredy borrowed
+    #Testing to borrow a book that has been already borrowed
     def test_invalid_book_borrowing(self):
         self.user.borrow(self.library_system, "Book")
         borrowing_same_book = self.user.borrow(self.library_system, "Book")
 
-        # Verify borrowing attempt fails
+        # Verify borrowing attempt failure
         self.assertIsNone(borrowing_same_book)
 
 
@@ -63,7 +63,8 @@ class TestingLibrarySystem(unittest.TestCase):
         #Check availability status of new book
         self.assertTrue(add_book_by_admin.availability_status)
 
-    #TEST_CASE: borrowing all books from library
+
+    #TEST edge/boundry CASE: borrowing all books from library
     def test_borrow_all_books(self):
         #Add book for testing
         book1 = Book("Test_Book1","Author1")
@@ -85,12 +86,19 @@ class TestingLibrarySystem(unittest.TestCase):
         self.assertIn(self.book, self.user.book_borrowed)
         self.assertIn(book1, self.user.book_borrowed)
     
-    #TEST_CASE: returning books that were not borrowed
+    #TEST edge/boundry CASE: returning books that were not borrowed
     def test_return_book_not_borrowed(self):
         returning_not_borrowed = self.user.return_book(self.library_system, "No books borrowed")
 
         #Check error message
         self.assertEqual(returning_not_borrowed, "You don't have 'No books borrowed' borrowed.")
+    
+    #TEST edge/boundry CASE: borrowing a book that does not exist
+    def test_borrow_nonexistent_book(self):
+        #Borrow a book that does not exist
+        borrow_nonexistent = self.user.borrow(self.library_system, "Book_That_Doesnt_Exist")
+        #Verify error message
+        self.assertIsNone(borrow_nonexistent)
     
 if __name__ == "__main__":
     unittest.main()
