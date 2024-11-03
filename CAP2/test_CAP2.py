@@ -23,7 +23,7 @@ class TestingLibrarySystem(unittest.TestCase):
     def test_valid_book_borrowing(self):
         self.user.borrow(self.library_system, "Book")
 
-        #Checking the books availability statust after borrow(unit testing to compare test value with false)
+        #Checking the books availability status after borrow(unit testing to compare test value with false)
         self.assertFalse(self.book.availability_status)
 
         #Check if the borrowed book is in users "Borrowed_book list"
