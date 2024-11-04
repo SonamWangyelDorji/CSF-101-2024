@@ -3,6 +3,7 @@ This file provides documentation for the test cases created to validate the func
 
 ## 1. Resources Used
 - Python UNITTEST Module: The main resource used for developing the test cases is the unittest module.
+- Referred online resources mentioned in the code
 
 ## 2. Justification for Using These Resources 
 - Unittest offers simplicity and compatibility as it is a reliable for smaller projects.
@@ -19,3 +20,6 @@ This file provides documentation for the test cases created to validate the func
 
 - Each test uses assertion (e.g assertIn, assertEqual, assertFalse) to confirm that actual outcomes match expected outcome.
 
+- To run the test, enter the code provided below 
+    ` `bash 
+    python -m unittest 
